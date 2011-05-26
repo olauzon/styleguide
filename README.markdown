@@ -1,12 +1,9 @@
-= Christian Neukirchen's Ruby Style Guide
-
-You may not like all rules presented here, but they work very well for
-me and have helped producing high quality code.  Everyone is free to
-code however they want, write and follow their own style guides, but
-when you contribute to my code, please follow these rules:
+Ruby Style Guide
+================
 
 
-== Formatting:
+Formatting
+----------
 
 * Use ASCII (or UTF-8, if you have to).
 
@@ -37,7 +34,8 @@ when you contribute to my code, please follow these rules:
 * Avoid trailing whitespace.
 
 
-== Syntax:
+Syntax
+------
 
 * Use def with parentheses when there are arguments.
 
@@ -80,7 +78,8 @@ when you contribute to my code, please follow these rules:
   =~, $0-9, $~, $` and $' when needed.
 
 
-== Naming:
+Naming
+------
 
 * Use snake_case for methods.
 
@@ -122,7 +121,8 @@ when you contribute to my code, please follow these rules:
   size over length.
 
 
-== Comments:
+Comments
+--------
 
 * Comments longer than a word are capitalized and use punctuation.
   Use two spaces after periods.
@@ -130,7 +130,8 @@ when you contribute to my code, please follow these rules:
 * Avoid superfluous comments.
 
 
-== The rest:
+The rest
+--------
 
 * Write ruby -w safe code.
 
@@ -154,7 +155,8 @@ when you contribute to my code, please follow these rules:
 * Avoid needless metaprogramming.
 
 
-== General:
+General
+-------
 
 * Code in a functional way, avoid mutation when it makes sense.
 
@@ -179,3 +181,9 @@ when you contribute to my code, please follow these rules:
 * Be consistent.
 
 * Use common sense.
+
+
+Credits
+-------
+
+Based largely on [Christian Neukirchen](http://chneukirchen.org/blog/)'s [Ruby Style Guide](https://github.com/chneukirchen/styleguide).
