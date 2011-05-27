@@ -8,7 +8,7 @@ I'm making changes to the guidelines, according to my personal
 preferences, and adding code examples to support each point.
 
 Eventually, I'd also like to include JavaScript and other languages.
-See (Felix's Node.js Style Guide)[http://nodeguide.com/style.html] for a
+See [Felix's Node.js Style Guide](http://nodeguide.com/style.html) for a
 Node.js Style Guide template.
 
 Formatting
