@@ -55,7 +55,7 @@ Syntax
   when calling "functions", i.e. when you use the return value in the
   same line.
 
-    x = Math.sin(y)
+    x = Math.sin(y)  
     array.delete e
 
 * Prefer {...} over do...end.  Multiline {...} is fine: having
@@ -92,23 +92,23 @@ Naming
   variables for short block/method parameters, according to this
   scheme:
 
-    a,b,c: any object
-    d: directory names
-    e: elements of an Enumerable
-    ex: rescued exceptions
-    f: files and file names
-    i,j: indexes
-    k: the key part of a hash entry
-    m: methods
-    o: any object
-    r: return values of short methods
-    s: strings
-    v: any value
-    v: the value part of a hash entry
-    x,y,z: numbers
+  * a,b,c: any object
+  * d: directory names
+  * e: elements of an Enumerable
+  * ex: rescued exceptions
+  * f: files and file names
+  * i,j: indexes
+  * k: the key part of a hash entry
+  * m: methods
+  * o: any object
+  * r: return values of short methods
+  * s: strings
+  * v: any value
+  * v: the value part of a hash entry
+  * x,y,z: numbers
 
-  And in general, the first letter of the class name if all objects
-  are of that type.
+    And in general, the first letter of the class name if all objects
+    are of that type.
 
 * Use _ or names prefixed with _ for unused variables.
 
