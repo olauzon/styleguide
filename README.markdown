@@ -1,46 +1,231 @@
 Ruby Style Guide
 ================
 
+
 Please note: This is a work in progress
 ---------------------------------------
 
-I'm making changes to the guidelines, according to my personal
-preferences, and adding code examples to support each point.
+I'm making changes to the guidelines according to my personal preferences, and
+adding code examples to support each point.
 
-Eventually, I'd also like to include JavaScript and other languages.
-See [Felix's Node.js Style Guide](http://nodeguide.com/style.html) for a
-Node.js Style Guide template.
+I'd also like to include JavaScript and other programming languages eventually.
+See [Felix's Node.js Style Guide](http://nodeguide.com/style.html) for a Node.js
+style guide template.
+
+
+Goals
+-----
+
+This style guide is an attempt to help me identify and understand the subset of
+the Ruby programming language I commonly employ. I believe this set of rules and
+guidelines yields the most satisfying style to write, and more importantly, read
+code in Ruby.
+
+The primary activity of a programmer is not to write code. It is to read code.
+This is often code written by the same programmer. Code is most easily read when
+its formatting provides cues about its internal structure, and its semantics
+reveal knowledge and insight about its domain and purpose. The key
+elements of coding style are thus formatting and naming.
+
+Code is useless unless it performs tasks reliably within a reasonable amount of
+time. Performance considerations are therefore important factors in developing
+and adapting coding style over time.
+
+
+Disclaimer
+----------
+
+I do not write the most beautiful code in the Universe, and following these
+guidelines will not necessarily lead to writing beautiful code.
+
 
 Formatting
 ----------
 
-* Use ASCII (or UTF-8, if you have to).
+### Never use more than _80 characters per line_
 
-* Use 2 space indent, no tabs.
+This is the single most important rule. If you only follow one rule, please let
+it be this rule. Many other rules are derived or altered by this rule.
 
-* Use Unix-style line endings.
+As an example, suppose you have a long list of options to pass into an
+ActiveRecord object
 
-* Use spaces around operators, after commas, colons and semicolons,
-  around { and before }.
+```ruby
+Person.create(:first_name => 'Adam', :last_name => 'Smith', :occupation => 'Philosopher', :date_of_birth => '1723-06-23', :karma => 17900717, :email => 'adam.smith@example.com')
+```
 
-* No spaces after (, [ and before ], ).
+Without looking at the example again, how many options were there?
 
-* Use two spaces before statement modifiers (postfix
-  if/unless/while/until/rescue).
+Now consider the same example with this formatting
 
-* Indent when as deep as case.
+```ruby
+Person.create(:first_name     => 'Adam',
+              :last_name      => 'Smith',
+              :occupation     => 'Philosopher',
+              :date_of_birth  => '1723-06-23',
+              :karma          => 17900717,
+              :email          => 'adam.smith@example.com')
+```
 
-* Use an empty line before the return value of a method (unless it
-  only has one line), and an empty line between defs.
+The latter example makes it easier to grasp its underlying structure. It is
+composed one option per line, and the eye and mind is good at estimating the
+number of lines it perceives. (citation needed)
 
-* Use RDoc and its conventions for API documentation.  Don't put an
-  empty line between the comment block and the def.
+Had there only been two options, we could have written
 
-* Use empty lines to break up a long method into logical paragraphs.
+```ruby
+Person.create(:first_name => 'Adam', :last_name => 'Smith')
+```
 
-* Keep lines fewer than 80 characters.
+It it nevertheless preferable to use one line per option to facilitate reading
+and manipulating options
 
-### Kill all whitespace all the time
+```ruby
+Person.create(:first_name => 'John', #'Adam',
+              :last_name  => 'Smith')
+```
+
+
+### Use _one item per line_ when a list items exceeds 80 characters
+
+From the 80 character per line rule
+
+#### Good
+
+```ruby
+  attr_accessible :first_name,
+                  :last_name,
+                  :email,
+                  :password,
+                  :phone,
+                  :address,
+                  :city,
+                  :password_confirmation,
+                  :state,
+                  :country
+```
+
+#### Better
+
+When the ordering of options is equivalent, favor lexicographical order
+
+```ruby
+  attr_accessible :address,
+                  :city,
+                  :country,
+                  :email,
+                  :first_name,
+                  :last_name,
+                  :password,
+                  :password_confirmation,
+                  :phone,
+                  :state
+```
+
+#### Not as good
+
+It's tempting to place as many options per line as possible. Don't. It makes it
+a lot more convenient to remove, add, and read options when there is only one
+per line. Remember, we are not printing screens on paper, and clean code can be
+read on digital screens.
+
+```ruby
+  attr_accessible :first_name, :last_name, :email, :password,
+                  :password_confirmation, :phone, :address, :city, :state,
+                  :country
+```
+
+#### Bad
+
+In this list
+
+```ruby
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :phone, :address, :city, :state, :country
+```
+
+how many attributes are accessible?
+
+Even worse, perhaps, is multiline over 80 characters
+
+```ruby
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :phone, :address, :city, :state,
+                  :country
+```
+
+### Good
+
+In highly indented position, place the first option on the second line
+
+```ruby
+class Reason
+
+  def create
+    if person.think?
+      Philosopher.create(
+        :first_name     => 'Adam',
+        :last_name      => 'Smith',
+        :occupation     => 'Philosopher',
+        :date_of_birth  => '1723-06-23',
+        :karma          => 17900717,
+        :email          => 'adam.smith@example.com'
+      )
+    else
+      Philosopher.destroy_all
+    end
+  end
+
+end
+```
+
+### _Align delimeters vertically_ on multiline statements
+
+#### Good
+
+
+```ruby
+Person.create(:first_name     => 'Adam',
+              :last_name      => 'Smith',
+              :occupation     => 'Philosopher',
+              :date_of_birth  => '1723-06-23',
+              :karma          => 17900717,
+              :email          => 'adam.smith@example.com')
+```
+
+#### Bad
+
+```ruby
+Person.create(:first_name => 'Adam',
+              :last_name => 'Smith',
+              :occupation => 'Philosopher',
+              :date_of_birth => '1723-06-23',
+              :karma => 17900717,
+              :email => 'adam.smith@example.com')
+```
+
+```ruby
+Person.create(:first_name => 'Adam',
+            :last_name => 'Smith',
+            :occupation => 'Philosopher',
+            :date_of_birth => '1723-06-23',
+            :karma => 17900717,
+            :email => 'adam.smith@example.com')
+```
+
+#### Bad
+
+Also make sure to left-align options
+
+```ruby
+Person.create(:first_name       => 'Adam', # This option aligns to the left of
+                                           # subsequent options
+                :last_name      => 'Smith',
+                :occupation     => 'Philosopher',
+                :date_of_birth  => '1723-06-23',
+                :karma          => 17900717,
+                :email          => 'adam.smith@example.com')
+```
+
+### Leave _no whitespace_ at the end of any line
 
 #### Good
 
@@ -89,6 +274,98 @@ end###
 ######
 ```
 
+
+### Always use _2 space indentation_
+
+
+#### Good
+
+```ruby
+class Person
+  def name
+    first_name + ' ' + last_name
+  end
+end
+```
+
+#### Bad
+
+Here's an example with 4 space indentation
+
+```ruby
+class Person
+    def name
+        first_name + ' ' + last_name
+    end
+end
+```
+
+
+### _No tabs_, ever
+
+### Use _spaces around operators_
+
+#### Good
+
+```ruby
+2 + 4
+'my' + ' ' + 'space'
+@foo ||= 'bar'
+```
+
+#### Bad
+
+```ruby
+2+4
+'my'+' '+'space'
+@foo||='bar'
+```
+
+### Use _spaces after commas_
+
+#### Good
+
+```ruby
+def sum(a, b)
+  a + b
+end
+
+elements = [1, 2, 3, 21, 45]
+```
+
+#### Bad
+
+```ruby
+def sum(a,b)
+  a + b
+end
+
+elements = [1,2,3,21,45]
+```
+
+### Use _space after colons_
+
+### _No semicolons_
+
+### Use spaced around { and before }
+
+### No spaces after `(` and before `)`
+
+### Optional spaces after `[` and before `]`
+
+* Use two spaces before statement modifiers (postfix
+  if/unless/while/until/rescue).
+
+* Indent when as deep as case.
+
+* Use an empty line before the return value of a method (unless it
+  only has one line), and an empty line between defs.
+
+* Use RDoc and its conventions for API documentation.  Don't put an
+  empty line between the comment block and the def.
+
+* Use empty lines to break up a long method into logical paragraphs.
+
 Syntax
 ------
 
@@ -130,19 +407,26 @@ end
 
 ### Prefer `{...}` over `do...end`
 
-
 #### Good
 
 ```ruby
-accounts.each { |account| account.charge! }
+1.upto(10).select { |n| n % 2 == 1 }
 ```
 
 #### Not as good
 
 ```ruby
-accounts.each do |account|
-  account.charge!
+1.upto(10).select do |n|
+  n % 2 == 1
 end
+```
+
+#### Bad
+
+Avoid placing `do...end` on the same line
+
+```ruby
+1.upto(10).select do |n| n % 2 == 1 end
 ```
 
 * Multiline {...} is fine: having
@@ -178,7 +462,7 @@ It's acceptable to omit the space after `{` and before `}`
 
 #### Not as acceptable
 
-It's not as acceptable to omit the space before `{`
+It's not as readable to omit the space before `{`
 
 ```ruby
 1.upto(10).select{|n| n % 2 == 1}.map{|n| n * 100}
@@ -399,6 +683,12 @@ General
 
 * Use common sense.
 
+Encoding
+--------
+
+### Use Unix-style line endings
+
+* Use ASCII (or UTF-8, if you have to)
 
 Credits
 -------
